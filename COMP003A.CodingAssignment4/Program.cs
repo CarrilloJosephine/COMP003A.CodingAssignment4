@@ -1,4 +1,4 @@
-﻿/* -*-
+/*
 // Author: Josephine Carrillo
 // Course: COMP-003A
 // Faculty: Jonathan Cruz
@@ -7,6 +7,7 @@
 
 
 using System.ComponentModel.Design;
+using System.Reflection.Metadata;
 
 namespace COMP003A.CodingAssignment4
 {
@@ -27,6 +28,8 @@ namespace COMP003A.CodingAssignment4
             int count = 0;
             List<string> productName = new List<string>();
             List<int> productQuantities = new List<int>();
+            bool useList = number == 2;
+            bool useArray = number == 1;
 
             while (true)
             {
@@ -43,22 +46,34 @@ namespace COMP003A.CodingAssignment4
                     Console.WriteLine("Enter product name: ");
                     string product = Console.ReadLine();
                     Console.WriteLine("Enter product quantity(how many you want a #) : ");
-                    int index = Array.IndexOf(products, quantities);
+                    int quantity = Array.IndexOf(quantities,product);
 
                     if (count < productName.Count)
                     {
-                        productName[count] = "Apples";
-                        productQuantities[count] = 50;
-                        count++;
+                        if (count < 10)
+                        {
+                            products[count] = "Apples";
+                            quantities[count] = 50;
+                            count++;
+                            Console.WriteLine("Product added successfully!");
+                        }
                     }
                     else
                     {
                         Console.WriteLine("Inventory is full!");
                     }
-                    if (List < productName.ToList)
+                    if (useArray)
                     {
-                        productName.Add("apples");
+                        products[count] = "Apples";
+                        quantities[count] = 50;
+                        count++;
+                        Console.WriteLine("Product added successfully!");
+                    }
+                    else if (useList)
+                    {
+                        productName.Add("Apples");
                         productQuantities.Add(50);
+                        Console.WriteLine("Product added successfully!");
                     }
 
                 }
@@ -71,17 +86,23 @@ namespace COMP003A.CodingAssignment4
                     if (index != -1)
                     {
                         productQuantities[index] = 100;
+                        Console.Write("enter new product ammount: ");
+                        productQuantities[index] = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Product updated successfully!");
                     }
                     else
                     {
                         Console.WriteLine("Product not found!");
                     }
-                    if (List) 
+                    if (useList) 
                     {
-                        int index = productName.IndexOf("apples");
+                        int quantity = productName.IndexOf("apples");
                         if (index != -1)
                         {
                             productQuantities[index] = 100;
+                            Console.Write("enter new product ammount: ");
+                            productQuantities[index] = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Product updated successfully!");
                         }
                         else
                         {
