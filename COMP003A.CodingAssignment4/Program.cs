@@ -111,7 +111,7 @@ namespace COMP003A.CodingAssignment4
                             Console.WriteLine("Product quantity updated successfully!");
                         }
                     }
-                    else if (questionsMenu == 3)
+                    else if (questionsMenu == 3)                                        // recheck 2 and 3 to convert check loop in video
                     {
                         Console.WriteLine("\nInventory Summary:");
 
