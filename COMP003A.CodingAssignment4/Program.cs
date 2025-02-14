@@ -29,173 +29,131 @@ namespace COMP003A.CodingAssignment4
             bool useArray = number == 1; 
             bool uselist = false;
 
-            while (true)
-            {
-                Console.WriteLine("\nInventory Management System Menu: ");
-                Console.WriteLine("1. Add a product ");
-                Console.WriteLine("2. update product quantity");
-                Console.WriteLine("3. view inventory: ");
-                Console.WriteLine("4. exit");
-                Console.WriteLine("Enter your choice:");
-                int questionsMenu = int.Parse(Console.ReadLine());
-
-                if (questionsMenu == 1)
-                    Console.Write("Enter product name: ");
-                string name = Console.ReadLine().Trim();
-
-                while (string.IsNullOrEmpty(name))
+                while (true)
                 {
-                    Console.WriteLine("Product name cannot be empty.");
-                    Console.Write("Enter product name: ");
-                    name = Console.ReadLine().Trim();
-                }
+                    Console.WriteLine("\nInventory Management System Menu: ");
+                    Console.WriteLine("1. Add a product ");
+                    Console.WriteLine("2. Update product quantity ");
+                    Console.WriteLine("3. View inventory ");
+                    Console.WriteLine("4. Exit");
+                    Console.Write("Enter your choice: ");
+                    int questionsMenu = int.Parse(Console.ReadLine());
 
-                int quantity;
-                Console.Write("Enter product quantity: ");
-                while (!int.TryParse(Console.ReadLine(), out quantity) || quantity < 0)
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid non-negative number.");
-                    Console.Write("Enter product quantity: ");
-                }
-
-                if (useList)
-                {
-                    productNamesList.Add(name);
-                    productQuantitiesList.Add(quantity);
-                    Console.WriteLine("Product added successfully!");
-                }
-                else
-                {
-                    if (count >= 10)
+                    if (questionsMenu == 1)
                     {
-                        Console.WriteLine("Inventory is full. Cannot add more products.");
-                        return;
-                    }
-
-                    products[count] = name;
-                    quantities[count] = quantity;
-                    count++;
-                    Console.WriteLine("Product added successfully!");
-                }
-
-                if (questionsMenu == 2)
-                {
-                    Console.Write("Enter product name: ");
-                    string name = Console.ReadLine().Trim();
-
-                    while (string.IsNullOrEmpty(name))
-                    {
-                        Console.WriteLine("Product name cannot be empty.");
                         Console.Write("Enter product name: ");
-                        name = Console.ReadLine().Trim();
-                    }
+                        string name = Console.ReadLine();
 
-                    int quantityy;
-                    Console.Write("Enter product quantity: ");
-                    while (!int.TryParse(Console.ReadLine(), out quantity) || quantity < 0)
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid non-negative number.");
+                        int quantity;
                         Console.Write("Enter product quantity: ");
-                    }
+                        int quantitites = int.Parse(Console.ReadLine());
 
-                    if (useList)
-                    {
-                        productList.Add(name);
-                        productquantities
-                            List.Add(quantity);
-                        Console.WriteLine("Product added successfully!");
-                    }
-                    else
-                    {
-                        if (count >= 10)
+
+                        if (useList)
                         {
-                            Console.WriteLine("Inventory is full. Cannot add more products.");
-                            return;
+                            productName.Add(name);
+                            productQuantities.Add(quantity);
+                            Console.WriteLine("Product added successfully!");
+                        }
+                        else if (useArray)
+                        {
+                            if (count >= 10)
+                            {
+                                Console.WriteLine("Inventory is full!");
+                            }
+                            else
+                            {
+                                products[count] = name;
+                                quantities[count] = quantity;
+                                count++;
+                                Console.WriteLine("Product added successfully!");
+                            }
+                        }
+                    }
+                    else if (questionsMenu == 2)
+                    {
+                        Console.Write("Enter product name to update: ");
+                        string name = Console.ReadLine().Trim();
+
+                        int index = -1;
+                        if (useList)
+                        {
+                            index = productName.IndexOf(name);
+                        }
+                        else if (useArray)
+                        {
+                        int indexnull = Array.IndexOf(products, name);           // tried useing null to get rid of swiggly line dont think used correctly            
                         }
 
-                        products[count] = name;
-                        quantities[count] = quantity;
-                        count++;
-                        Console.WriteLine("Product added successfully!");
-                    }
-                }
-                else if (questionsMenu == 3)
-                    if ((useList && productNamesList.Count == 0) || (!useList && count == 0))
-                    {
-                        Console.WriteLine("\nNo products in inventory to update.");
-                        return;
-                    }
-
-                Console.Write("Enter product name to update: ");
-                string name = Console.ReadLine().Trim();
-                int index = -1;
-
-                if (useList)
-                {
-                    index = productNamesList.IndexOf(name);
-                }
-                else
-                {
-                    index = Array.IndexOf(products, name, 0, count);
-                }
-
-                if (index == -1)
-                {
-                    Console.WriteLine("Product not found.");
-                    return;
-                }
-
-                int newQuantity;
-                Console.Write("Enter new quantity: ");
-                while (!int.TryParse(Console.ReadLine(), out newQuantity) || newQuantity < 0)
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid non-negative number.");
-                    Console.Write("Enter new quantity: ");
-                }
-
-                if (useList)
-                {
-                    productQuantitiesList[index] = newQuantity;
-                }
-                else
-                {
-                    quantities[index] = newQuantity;
-                }
-
-                Console.WriteLine("Product quantity updated successfully!");
-
-                else if (questionsMenu == 4)
-                {
-                    {
-                        if ((useList && productNamesList.Count == 0) || (!useList && count == 0))
+                        if (index == -1)
                         {
-                            Console.WriteLine("\nInventory is empty.");
-                            return;
+                            Console.WriteLine("Product not found.");
                         }
+                        else
+                        {
+                            int newQuantity;
+                            Console.Write("Enter new quantity: ");
+                            quantities[index] = int.Parse(Console.ReadLine());
+                            {
+                            Console.WriteLine("Invalid input.");
+                                Console.Write("Enter new quantity: ");
+                            }
 
+                            if (useList)
+                            {
+                                productQuantities[index] = newQuantity;
+                            }
+                            else if (useArray)
+                            {
+                                quantities[index] = newQuantity;
+                            }
+
+                            Console.WriteLine("Product quantity updated successfully!");
+                        }
+                    }
+                    else if (questionsMenu == 3)
+                    {
                         Console.WriteLine("\nInventory Summary:");
 
                         if (useList)
                         {
-                            for (int i = 0; i < productNamesList.Count; i++)
+                            if (productName.Count == 0)
                             {
-                                Console.WriteLine($"- {productNamesList[i]}: {productQuantitiesList[i]}");
+                                Console.WriteLine("Inventory is empty.");
+                            }
+                            else
+                            {
+                                for (int i = 0; i < productName.Count; i++)
+                                {
+                                    Console.WriteLine($"{productName[i]} - {productQuantities[i]}");
+                                }
                             }
                         }
-                        else
+                        else if (useArray)
                         {
-                            for (int i = 0; i < count; i++)
+                            if (count == 0)
                             {
-                                Console.WriteLine($"- {products[i]}: {quantities[i]}");
+                                Console.WriteLine("Inventory is empty.");
+                            }
+                            else
+                            {
+                                for (int i = 0; i < count; i++)
+                                {
+                                    Console.WriteLine($"{products[i]} - {quantities[i]}");
+                                }
                             }
                         }
                     }
+                    else if (questionsMenu == 4)
+                    {
+                        Console.WriteLine("Thank you for using the Inventory Management System. Goodbyeee!");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice. Please enter a number between 1 & 4.");
+                    }
                 }
-                
             }
         }
-
     }
-}
-
-      
