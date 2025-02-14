@@ -1,15 +1,12 @@
-/*
+/* -*-
 // Author: Josephine Carrillo
 // Course: COMP-003A
 // Faculty: Jonathan Cruz
 // Purpose: Inventory msnagement application with a minimun of 10 elements in the collection
 */
 
-
-using System.ComponentModel.Design;
-using System.Reflection.Metadata;
-
 namespace COMP003A.CodingAssignment4
+
 {
     internal class Program
     {
@@ -29,7 +26,8 @@ namespace COMP003A.CodingAssignment4
             List<string> productName = new List<string>();
             List<int> productQuantities = new List<int>();
             bool useList = number == 2;
-            bool useArray = number == 1;
+            bool useArray = number == 1; 
+            bool uselist = false;
 
             while (true)
             {
@@ -42,97 +40,162 @@ namespace COMP003A.CodingAssignment4
                 int questionsMenu = int.Parse(Console.ReadLine());
 
                 if (questionsMenu == 1)
-                {
-                    Console.WriteLine("Enter product name: ");
-                    string product = Console.ReadLine();
-                    Console.WriteLine("Enter product quantity(how many you want a #) : ");
-                    int quantity = Array.IndexOf(quantities,product);
+                    Console.Write("Enter product name: ");
+                string name = Console.ReadLine().Trim();
 
-                    if (count < productName.Count)
+                while (string.IsNullOrEmpty(name))
+                {
+                    Console.WriteLine("Product name cannot be empty.");
+                    Console.Write("Enter product name: ");
+                    name = Console.ReadLine().Trim();
+                }
+
+                int quantity;
+                Console.Write("Enter product quantity: ");
+                while (!int.TryParse(Console.ReadLine(), out quantity) || quantity < 0)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid non-negative number.");
+                    Console.Write("Enter product quantity: ");
+                }
+
+                if (useList)
+                {
+                    productNamesList.Add(name);
+                    productQuantitiesList.Add(quantity);
+                    Console.WriteLine("Product added successfully!");
+                }
+                else
+                {
+                    if (count >= 10)
                     {
-                        if (count < 10)
-                        {
-                            products[count] = "Apples";
-                            quantities[count] = 50;
-                            count++;
-                            Console.WriteLine("Product added successfully!");
-                        }
+                        Console.WriteLine("Inventory is full. Cannot add more products.");
+                        return;
+                    }
+
+                    products[count] = name;
+                    quantities[count] = quantity;
+                    count++;
+                    Console.WriteLine("Product added successfully!");
+                }
+
+                if (questionsMenu == 2)
+                {
+                    Console.Write("Enter product name: ");
+                    string name = Console.ReadLine().Trim();
+
+                    while (string.IsNullOrEmpty(name))
+                    {
+                        Console.WriteLine("Product name cannot be empty.");
+                        Console.Write("Enter product name: ");
+                        name = Console.ReadLine().Trim();
+                    }
+
+                    int quantityy;
+                    Console.Write("Enter product quantity: ");
+                    while (!int.TryParse(Console.ReadLine(), out quantity) || quantity < 0)
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid non-negative number.");
+                        Console.Write("Enter product quantity: ");
+                    }
+
+                    if (useList)
+                    {
+                        productList.Add(name);
+                        productquantities
+                            List.Add(quantity);
+                        Console.WriteLine("Product added successfully!");
                     }
                     else
                     {
-                        Console.WriteLine("Inventory is full!");
-                    }
-                    if (useArray)
-                    {
-                        products[count] = "Apples";
-                        quantities[count] = 50;
+                        if (count >= 10)
+                        {
+                            Console.WriteLine("Inventory is full. Cannot add more products.");
+                            return;
+                        }
+
+                        products[count] = name;
+                        quantities[count] = quantity;
                         count++;
                         Console.WriteLine("Product added successfully!");
                     }
-                    else if (useList)
+                }
+                else if (questionsMenu == 3)
+                    if ((useList && productNamesList.Count == 0) || (!useList && count == 0))
                     {
-                        productName.Add("Apples");
-                        productQuantities.Add(50);
-                        Console.WriteLine("Product added successfully!");
+                        Console.WriteLine("\nNo products in inventory to update.");
+                        return;
                     }
 
-                }
-                else if (questionsMenu == 2)
+                Console.Write("Enter product name to update: ");
+                string name = Console.ReadLine().Trim();
+                int index = -1;
+
+                if (useList)
                 {
-                    Console.WriteLine("update the product quantity: ");
-                    string product = Console.ReadLine();
-                    Console.WriteLine("new product quantity: ");
-                    int index = Array.IndexOf(products, "apples");
-                    if (index != -1)
+                    index = productNamesList.IndexOf(name);
+                }
+                else
+                {
+                    index = Array.IndexOf(products, name, 0, count);
+                }
+
+                if (index == -1)
+                {
+                    Console.WriteLine("Product not found.");
+                    return;
+                }
+
+                int newQuantity;
+                Console.Write("Enter new quantity: ");
+                while (!int.TryParse(Console.ReadLine(), out newQuantity) || newQuantity < 0)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid non-negative number.");
+                    Console.Write("Enter new quantity: ");
+                }
+
+                if (useList)
+                {
+                    productQuantitiesList[index] = newQuantity;
+                }
+                else
+                {
+                    quantities[index] = newQuantity;
+                }
+
+                Console.WriteLine("Product quantity updated successfully!");
+
+                else if (questionsMenu == 4)
+                {
                     {
-                        productQuantities[index] = 100;
-                        Console.Write("enter new product ammount: ");
-                        productQuantities[index] = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Product updated successfully!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Product not found!");
-                    }
-                    if (useList) 
-                    {
-                        int quantity = productName.IndexOf("apples");
-                        if (index != -1)
+                        if ((useList && productNamesList.Count == 0) || (!useList && count == 0))
                         {
-                            productQuantities[index] = 100;
-                            Console.Write("enter new product ammount: ");
-                            productQuantities[index] = int.Parse(Console.ReadLine());
-                            Console.WriteLine("Product updated successfully!");
+                            Console.WriteLine("\nInventory is empty.");
+                            return;
+                        }
+
+                        Console.WriteLine("\nInventory Summary:");
+
+                        if (useList)
+                        {
+                            for (int i = 0; i < productNamesList.Count; i++)
+                            {
+                                Console.WriteLine($"- {productNamesList[i]}: {productQuantitiesList[i]}");
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("Product not found!");
+                            for (int i = 0; i < count; i++)
+                            {
+                                Console.WriteLine($"- {products[i]}: {quantities[i]}");
+                            }
                         }
                     }
                 }
-                else if (questionsMenu == 3)
-                {
-                    Console.WriteLine("Inventory: ");
-                    for (int i = 0; i < count; i++)
-                    {
-                        Console.WriteLine(products[i] + " - " + quantities[i]);
-                    }
-                    if (useList)
-                    {
-                        for (int i = 0; i < productName.Count; i++)
-                        {
-                            Console.WriteLine(productName[i] + " - " + productQuantities[i]);
-                        }
-                    }
-
-                }
-                else if (questionsMenu == 4)
-                {
-                    Console.WriteLine("Thank you for using the Inventory Management System. Goodbyeeee! ");
-
-                }
-
+                
             }
         }
+
     }
 }
+
+      
